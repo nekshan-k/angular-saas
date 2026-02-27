@@ -1,0 +1,12 @@
+<section class="space-y-4">
+  <h1 class="text-label-1 text-xl font-semibold">User Management</h1>
+  <app-table
+    [columns]="columns"
+    [records]="records"
+    [totalRecords]="records.length"
+    [selectable]="true"
+    [initialRows]="5"
+    [actions]="getRowActions"
+    (action)="onAction($event)"
+  ></app-table>
+</section>

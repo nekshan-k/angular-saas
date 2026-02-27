@@ -1,0 +1,41 @@
+<aside
+  class="sticky top-16 self-start bg-white border-r border-default-stroke h-[calc(100vh-4rem)]"
+  [class.w-64]="!collapsed"
+  [class.w-20]="collapsed"
+>
+  <button
+    type="button"
+    (click)="toggleCollapse.emit()"
+    class="absolute top-6 -right-6 h-10 w-6 bg-primary-2 rounded-r-lg flex items-center justify-center"
+  >
+    <app-icon [icon]="collapsed ? chevronRightIcon : chevronLeftIcon" [size]="16" color="white"></app-icon>
+  </button>
+
+  <nav class="py-3">
+    <ul class="px-3">
+      <ng-container *ngFor="let entry of entries">
+        <li *ngIf="entry.type === 'divider'" class="my-2">
+          <div class="h-px bg-gray-2"></div>
+        </li>
+
+        <li *ngIf="entry.type === 'item'">
+          <button
+            type="button"
+            (click)="setActive(entry)"
+            class="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-gray-1 hover:bg-gray-2 hover:text-primary-2 transition-colors"
+            [class.bg-primary-hover]="isActive(entry)"
+            [class.text-primary-2]="isActive(entry)"
+            [class.justify-center]="collapsed"
+            [attr.title]="collapsed ? entry.label : null"
+          >
+            <app-icon [icon]="entry.icon" [size]="18" color="currentColor"></app-icon>
+            <span *ngIf="!collapsed" class="text-sm font-medium flex-1 text-left">{{ entry.label }}</span>
+            <span *ngIf="!collapsed && entry.badge" class="text-xs px-2 py-0.5 rounded-full bg-gray-2 text-gray-1">
+              {{ entry.badge }}
+            </span>
+          </button>
+        </li>
+      </ng-container>
+    </ul>
+  </nav>
+</aside>

@@ -1,0 +1,121 @@
+<div class="rounded-xl border border-default-stroke bg-white overflow-hidden">
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead class="bg-primary-8 text-label-1">
+        <tr>
+          <th *ngIf="selectable" class="w-10 px-3 py-3 text-left">
+            <input
+              type="checkbox"
+              [checked]="allVisibleSelected"
+              [indeterminate]="someVisibleSelected"
+              (change)="toggleAllVisible($any($event.target).checked)"
+              class="h-4 w-4 accent-primary-1"
+            />
+          </th>
+          <th
+            *ngFor="let col of columns"
+            class="px-4 py-3 text-left font-semibold"
+            [class.cursor-pointer]="col.sortable && col.field"
+            [class.hover:bg-primary-9]="col.sortable && col.field"
+            (click)="onSort(col)"
+          >
+            <div class="inline-flex items-center gap-2">
+              <span>{{ col.header }}</span>
+              <span *ngIf="col.sortable && col.field" class="text-xs">{{ getSortIndicator(col) }}</span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody *ngIf="!loading && visibleRecords.length">
+        <tr *ngFor="let row of visibleRecords" class="border-t border-gray-2 hover:bg-gray-2/40">
+          <td *ngIf="selectable" class="px-3 py-3 align-top">
+            <input
+              type="checkbox"
+              [checked]="isSelected(row)"
+              (change)="toggleRow(row, $any($event.target).checked)"
+              class="h-4 w-4 accent-primary-1"
+            />
+          </td>
+
+          <td *ngFor="let col of columns" class="px-4 py-3 align-top text-body-1">
+            <ng-container [ngSwitch]="col.type || 'text'">
+              <ng-container *ngSwitchCase="'user'">
+                <div class="flex items-start gap-3">
+                  <span class="mt-1 inline-block h-2.5 w-2.5 rounded-full" [class]="getStatusDotClass(getUserStatus(row, col))"></span>
+                  <div class="min-w-0">
+                    <div class="font-medium text-label-1" [innerHTML]="highlight(getUserName(row, col))"></div>
+                    <div class="text-xs text-body-2">{{ getUserId(row, col) }}</div>
+                  </div>
+                </div>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'status'">
+                <span class="inline-flex rounded-full px-2 py-1 text-xs font-medium" [class]="getStatusPillClass(displayValue(row, col))">
+                  {{ displayValue(row, col) }}
+                </span>
+              </ng-container>
+
+              <ng-container *ngSwitchCase="'actions'">
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    *ngFor="let act of getDirectActions(row)"
+                    type="button"
+                    (click)="emitAction(act.key, row)"
+                    class="rounded-md border border-default-stroke px-2 py-1 text-xs font-medium hover:bg-gray-2"
+                    [class]="act.className || ''"
+                  >
+                    {{ act.label }}
+                  </button>
+                </div>
+              </ng-container>
+
+              <ng-container *ngSwitchDefault>
+                <span [innerHTML]="highlight(displayValue(row, col))"></span>
+              </ng-container>
+            </ng-container>
+          </td>
+        </tr>
+      </tbody>
+
+      <tbody *ngIf="loading">
+        <tr *ngFor="let s of [1,2,3,4,5]" class="border-t border-gray-2">
+          <td *ngIf="selectable" class="px-3 py-4"><div class="h-4 w-4 rounded bg-gray-2"></div></td>
+          <td *ngFor="let col of columns" class="px-4 py-4"><div class="h-4 w-full rounded bg-gray-2"></div></td>
+        </tr>
+      </tbody>
+
+      <tbody *ngIf="!loading && !visibleRecords.length">
+        <tr>
+          <td class="px-4 py-8 text-center text-body-2" [attr.colspan]="columns.length + (selectable ? 1 : 0)">
+            <div>{{ emptyHtml }}</div>
+            <button *ngIf="addNewLinkLabel" type="button" (click)="onAddNew.emit()" class="mt-2 text-primary-2 hover:underline">
+              {{ addNewLinkLabel }}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="total > 0" class="flex flex-col gap-3 border-t border-gray-2 bg-white px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+    <div class="flex items-center gap-3">
+      <select [(ngModel)]="rows" (change)="onPageSizeChange()" class="rounded-md border border-default-stroke bg-white px-2 py-1 text-sm">
+        <option *ngFor="let option of pageSizeOptions" [ngValue]="option.value">{{ option.label }}</option>
+      </select>
+      <div class="text-sm text-body-2">
+        {{ first + 1 }} - {{ first + visibleRecords.length }} of {{ total }}
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button type="button" (click)="prevPage()" [disabled]="currentPage <= 0" class="rounded-md border border-default-stroke px-3 py-1.5 text-sm disabled:opacity-50">
+        Prev
+      </button>
+      <span class="text-sm text-body-2">{{ currentPage + 1 }} / {{ totalPages }}</span>
+      <button type="button" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1" class="rounded-md border border-default-stroke px-3 py-1.5 text-sm disabled:opacity-50">
+        Next
+      </button>
+    </div>
+  </div>
+</div>

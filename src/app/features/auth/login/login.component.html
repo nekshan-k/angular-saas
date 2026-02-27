@@ -1,0 +1,52 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-login-from via-login-via to-login-to px-4">
+  <div class="max-w-md w-full">
+    <div class="bg-white rounded-2xl shadow-xl p-8">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold mb-2 text-label-1">Welcome Back</h1>
+        <p class="text-sm text-body-2">Sign in to access your account</p>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <app-input
+          id="username"
+          label="Username"
+          inputType="text"
+          placeholder="Enter your username"
+          [required]="true"
+          [error]="getUsernameError()"
+          formControlName="username"
+        ></app-input>
+
+        <app-input
+          id="password"
+          label="Password"
+          inputType="password"
+          placeholder="Enter your password"
+          [required]="true"
+          [error]="getPasswordError()"
+          formControlName="password"
+        ></app-input>
+
+        <div *ngIf="errorMessage" class="p-3 rounded-lg bg-red-50 border border-red-200">
+          <p class="text-sm text-red-600 text-center">{{ errorMessage }}</p>
+        </div>
+
+        <app-button
+          type="submit"
+          variant="primary"
+          size="lg"
+          [fullWidth]="true"
+          [loading]="loading"
+        >
+          Sign In
+        </app-button>
+      </form>
+
+      <div class="mt-6 text-center">
+        <p class="text-xs text-placeholder">
+          Demo credentials: admin / 123qwe
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
