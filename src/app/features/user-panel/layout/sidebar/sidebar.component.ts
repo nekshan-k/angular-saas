@@ -72,6 +72,7 @@ export class SidebarComponent {
     }
 
     if (entry.route) {
+      this.storeLastProtectedRoute(entry.route);
       this.router.navigateByUrl(entry.route);
       return;
     }
@@ -89,5 +90,13 @@ export class SidebarComponent {
     }
 
     return this.activeId === entry.id;
+  }
+
+  private storeLastProtectedRoute(route: string): void {
+    if (typeof localStorage === 'undefined') {
+      return;
+    }
+
+    localStorage.setItem('last_protected_route', route);
   }
 }

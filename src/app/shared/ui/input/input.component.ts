@@ -229,7 +229,7 @@ export class InputComponent implements ControlValueAccessor, OnInit, OnDestroy, 
   }
 
   get inputClasses(): string {
-    const baseClasses = 'block w-full rounded-lg border shadow-sm focus:outline-none transition-all duration-200';
+    const baseClasses = 'block w-full rounded-lg border shadow-sm focus:outline-none transition-all duration-200 text-body-1 placeholder:text-placeholder';
     
     const sizeClasses = {
       sm: 'px-3 py-1.5 text-sm',
@@ -248,7 +248,7 @@ export class InputComponent implements ControlValueAccessor, OnInit, OnDestroy, 
   }
 
   get textareaClasses(): string {
-    const baseClasses = 'block w-full rounded-lg border shadow-sm focus:outline-none transition-all duration-200 resize-none';
+    const baseClasses = 'block w-full rounded-lg border shadow-sm focus:outline-none transition-all duration-200 resize-none text-body-1 placeholder:text-placeholder';
     
     const sizeClasses = {
       sm: 'px-3 py-1.5 text-sm',

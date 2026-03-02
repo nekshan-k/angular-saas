@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../header/header.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { ThemeService } from '../../../../core/services/theme.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -12,6 +13,12 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 })
 export class MainLayoutComponent {
   isSidebarCollapsed = false;
+
+  readonly themeVariables;
+
+  constructor(private readonly themeService: ThemeService) {
+    this.themeVariables = this.themeService.themeCssVariables;
+  }
 
   toggleSidebarCollapse(): void {
     this.isSidebarCollapsed = !this.isSidebarCollapsed;

@@ -7,9 +7,56 @@
   </div>
 
   <div class="flex items-center gap-2">
-    <button type="button" class="h-9 w-9 rounded-full hover:bg-gray-2 flex items-center justify-center text-body-2">
-      <app-icon [icon]="sunIcon" [size]="18" color="currentColor"></app-icon>
-    </button>
+    <div class="relative">
+      <button
+        type="button"
+        (click)="toggleThemePanel()"
+        class="h-9 px-3 rounded-lg border border-default-stroke hover:bg-gray-2 flex items-center justify-center text-body-2 text-sm font-medium"
+      >
+        Theme
+      </button>
+
+      <div *ngIf="isThemePanelOpen" class="absolute right-0 mt-2 w-64 bg-white border border-default-stroke rounded-lg shadow-sm p-3 z-40">
+        <div class="space-y-3">
+          <div>
+            <div class="text-xs text-body-2 mb-1">Primary Color</div>
+            <div class="flex items-center gap-2">
+              <input
+                type="color"
+                class="h-8 w-10 rounded border border-default-stroke bg-transparent"
+                [value]="primaryColor()"
+                (input)="onPrimaryColorChange($event)"
+              />
+              <input
+                type="text"
+                class="h-8 flex-1 rounded border border-default-stroke px-2 text-sm text-body-2"
+                [value]="primaryColor()"
+                (change)="onPrimaryColorChange($event)"
+              />
+            </div>
+          </div>
+
+          <div>
+            <div class="text-xs text-body-2 mb-1">Secondary Color</div>
+            <div class="flex items-center gap-2">
+              <input
+                type="color"
+                class="h-8 w-10 rounded border border-default-stroke bg-transparent"
+                [value]="secondaryColor()"
+                (input)="onSecondaryColorChange($event)"
+              />
+              <input
+                type="text"
+                class="h-8 flex-1 rounded border border-default-stroke px-2 text-sm text-body-2"
+                [value]="secondaryColor()"
+                (change)="onSecondaryColorChange($event)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <button type="button" class="h-9 w-9 rounded-full hover:bg-gray-2 flex items-center justify-center text-body-2">
       <app-icon [icon]="bellIcon" [size]="18" color="currentColor"></app-icon>
     </button>

@@ -1,0 +1,91 @@
+<div class="grid grid-cols-12 gap-6">
+  <aside class="col-span-12 md:col-span-4 lg:col-span-3 border-r border-gray-2 pr-4">
+    <div class="text-xl font-semibold text-label-1 mb-1">Create New AR</div>
+    <div class="text-sm text-body-2 mb-4">Set up a new Appointed Representative in 5 simple steps</div>
+
+    <div class="space-y-4">
+      <div *ngFor="let step of steps; let i = index" class="flex items-start gap-3">
+        <div class="h-8 w-8 rounded-full flex items-center justify-center text-sm font-semibold"
+          [class.bg-primary-7]="i === stepIndex"
+          [class.text-primary-2]="i === stepIndex"
+          [class.bg-gray-2]="i !== stepIndex"
+          [class.text-body-2]="i !== stepIndex"
+        >
+          {{ i + 1 }}
+        </div>
+        <div>
+          <div class="text-sm font-medium" [class.text-label-1]="i === stepIndex" [class.text-body-2]="i !== stepIndex">{{ step }}</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="col-span-12 md:col-span-8 lg:col-span-9 flex flex-col">
+    <div class="flex items-start justify-between mb-4">
+      <div>
+        <div class="text-xs text-body-2">Step {{ stepIndex + 1 }} of {{ steps.length }}</div>
+        <div class="text-xl font-semibold text-label-1">{{ stepLabel }}</div>
+      </div>
+      <div class="w-32 h-2 bg-gray-2 rounded-full overflow-hidden mt-2">
+        <div class="h-full bg-primary-2" [style.width.%]="completionRatio * 100"></div>
+      </div>
+    </div>
+
+    <div class="flex-1 space-y-4">
+      <ng-container [ngSwitch]="stepIndex">
+        <div *ngSwitchCase="0" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <app-input label="Company Name" [required]="true" placeholder="Enter Company Name" [(ngModel)]="form.companyName"></app-input>
+          <app-input label="Company Title" placeholder="Enter Company Title" [(ngModel)]="form.companyTitle"></app-input>
+          <div class="md:col-span-2">
+            <app-input label="Company Number" [required]="true" placeholder="Enter Company Number" [(ngModel)]="form.companyNumber"></app-input>
+          </div>
+          <app-input
+            label="Assign Principal AR"
+            [required]="true"
+            inputType="dropdown"
+            placeholder="Select"
+            [dropdownOptions]="principalArOptions"
+            [(ngModel)]="form.principalAr"
+          ></app-input>
+          <app-input label="Assign Credit" [required]="true" placeholder="00" [(ngModel)]="form.credits"></app-input>
+        </div>
+
+        <div *ngSwitchCase="1" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="md:col-span-2">
+            <app-input label="Address Line" [required]="true" placeholder="Enter Address" [(ngModel)]="form.addressLine1"></app-input>
+          </div>
+          <app-input label="City" [required]="true" placeholder="Enter City" [(ngModel)]="form.city"></app-input>
+          <app-input label="Postcode" [required]="true" placeholder="Enter Postcode" [(ngModel)]="form.postcode"></app-input>
+          <div class="md:col-span-2">
+            <app-input label="Country" [required]="true" placeholder="Enter Country" [(ngModel)]="form.country"></app-input>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="2" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <app-input label="Contact Name" [required]="true" placeholder="Enter Contact Name" [(ngModel)]="form.contactName"></app-input>
+          <app-input label="Contact Email" inputType="email" [required]="true" placeholder="Enter Contact Email" [(ngModel)]="form.contactEmail"></app-input>
+          <div class="md:col-span-2">
+            <app-input label="Contact Phone" inputType="phone" placeholder="Enter Contact Phone" [(ngModel)]="form.contactPhone"></app-input>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="3" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <app-input label="Website" placeholder="Enter Website" [(ngModel)]="form.website"></app-input>
+          <app-input label="LinkedIn" placeholder="Enter LinkedIn" [(ngModel)]="form.linkedIn"></app-input>
+        </div>
+
+        <div *ngSwitchCase="4" class="grid grid-cols-1 gap-4">
+          <app-input label="Documents Notes" inputType="textarea" placeholder="Add document notes" [(ngModel)]="form.notes"></app-input>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="mt-6 flex items-center justify-between border-t border-gray-2 pt-4">
+      <app-button variant="outline" size="md" (clicked)="previousStep()" [disabled]="stepIndex === 0">Previous</app-button>
+      <div class="flex items-center gap-2">
+        <app-button variant="outline" size="md" (clicked)="onCancel()">Cancel</app-button>
+        <app-button variant="primary" size="md" (clicked)="nextStep()">{{ isLastStep ? 'Finish' : 'Next' }}</app-button>
+      </div>
+    </div>
+  </div>
+</div>

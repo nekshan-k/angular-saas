@@ -14,7 +14,7 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'user-management'
+        redirectTo: 'dashboard'
       },
       {
         path: 'dashboard',

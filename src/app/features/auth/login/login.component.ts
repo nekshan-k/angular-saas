@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/dashboard']);
     }
 
     this.loginForm = this.fb.group({
@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(username, password).subscribe({
       next: (response) => {
         this.tokenService.setTokens(response.accessToken, response.refreshToken);
-        this.router.navigate(['/']);
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         this.errorMessage = error.message || 'Invalid credentials';

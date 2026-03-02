@@ -31,19 +31,19 @@ module.exports = {
           8: '#fafafa'
         },
         primary: {
-          1: '#2d5ecf',
-          2: '#3874ff',
-          3: '#6090ff',
-          4: '#88acff',
-          5: '#afc7ff',
-          6: '#c3d5ff',
-          7: '#d7e3ff',
-          8: '#ebf1ff',
-          hover: '#E1EAFF'
+          1: 'var(--primary-1, #2d5ecf)',
+          2: 'var(--primary-2, #3874ff)',
+          3: 'var(--primary-3, #6090ff)',
+          4: 'var(--primary-4, #88acff)',
+          5: 'var(--primary-5, #afc7ff)',
+          6: 'var(--primary-6, #c3d5ff)',
+          7: 'var(--primary-7, #d7e3ff)',
+          8: 'var(--primary-8, #ebf1ff)',
+          hover: 'var(--primary-hover, #e1eaff)'
         },
         secondary: {
-          1: '#f56630',
-          hover: '#ffece5'
+          1: 'var(--secondary-1, #f56630)',
+          hover: 'var(--secondary-hover, #ffece5)'
         },
         gray: {
           1: '#525b75',

@@ -1,11 +1,13 @@
-<div class="min-h-screen bg-base">
+<div class="h-full bg-base flex flex-col" [ngStyle]="themeVariables()">
   <app-header></app-header>
 
-  <div class="flex min-h-[calc(100vh-4rem)]">
+  <div class="flex flex-1 min-h-0">
     <app-sidebar [collapsed]="isSidebarCollapsed" (toggleCollapse)="toggleSidebarCollapse()"></app-sidebar>
 
-    <main class="flex-1 p-6 overflow-auto">
-      <router-outlet></router-outlet>
+    <main class="flex-1 min-h-0 overflow-auto p-6">
+      <div class="h-full">
+        <router-outlet></router-outlet>
+      </div>
     </main>
   </div>
 </div>

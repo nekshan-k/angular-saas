@@ -57,7 +57,7 @@
               </ng-container>
 
               <ng-container *ngSwitchCase="'actions'">
-                <div class="flex flex-wrap gap-2">
+                <div class="relative flex items-center justify-end gap-2">
                   <button
                     *ngFor="let act of getDirectActions(row)"
                     type="button"
@@ -67,6 +67,30 @@
                   >
                     {{ act.label }}
                   </button>
+
+                  <button
+                    *ngIf="getMenuActions(row).length"
+                    type="button"
+                    (click)="toggleMenu(row, $event)"
+                    class="h-8 w-8 rounded-md border border-default-stroke text-body-2 hover:bg-gray-2"
+                  >
+                    ⋮
+                  </button>
+
+                  <div
+                    *ngIf="isMenuOpen(row)"
+                    class="absolute right-0 top-9 z-20 min-w-32 rounded-md border border-default-stroke bg-white p-1 shadow-sm"
+                  >
+                    <button
+                      *ngFor="let menuAction of getMenuActions(row)"
+                      type="button"
+                      (click)="emitAction(menuAction.key, row)"
+                      class="block w-full rounded px-3 py-2 text-left text-sm text-body-1 hover:bg-gray-2"
+                      [class]="menuAction.className || ''"
+                    >
+                      {{ menuAction.label }}
+                    </button>
+                  </div>
                 </div>
               </ng-container>
 

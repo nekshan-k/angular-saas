@@ -60,6 +60,7 @@ export class TableComponent implements OnChanges {
   first = 0;
   localSortField?: string;
   localSortOrder: TableSortOrder = 0;
+  menuOpenRow: any | null = null;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['initialRows']) {
@@ -285,6 +286,7 @@ export class TableComponent implements OnChanges {
   }
 
   emitAction(key: string, row: any): void {
+    this.menuOpenRow = null;
     this.action.emit({ key, row });
   }
 
@@ -293,6 +295,22 @@ export class TableComponent implements OnChanges {
       return [];
     }
     return this.actions(row).direct ?? [];
+  }
+
+  getMenuActions(row: any): TableAction[] {
+    if (!this.actions) {
+      return [];
+    }
+    return this.actions(row).menu ?? [];
+  }
+
+  toggleMenu(row: any, event: MouseEvent): void {
+    event.stopPropagation();
+    this.menuOpenRow = this.menuOpenRow === row ? null : row;
+  }
+
+  isMenuOpen(row: any): boolean {
+    return this.menuOpenRow === row;
   }
 
   private syncSelection(): void {

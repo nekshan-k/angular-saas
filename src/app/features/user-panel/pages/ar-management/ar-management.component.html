@@ -1,3 +1,29 @@
-<section class="rounded-xl border border-default-stroke bg-white p-6">
-  <h1 class="text-label-1 text-xl font-semibold">AR Management</h1>
+<section class="h-full p-6 flex flex-col">
+  <div class="mb-5 flex items-center justify-between">
+    <h1 class="text-label-1 text-xl font-semibold">AR Management</h1>
+    <app-button *ngIf="hasData" variant="primary" size="md" (clicked)="openAddArModal()">Create AR</app-button>
+  </div>
+
+  <div *ngIf="!hasData" class="flex flex-1 items-center justify-center">
+    <app-empty-state
+      [title]="'No Appointed Representative'"
+      [buttonLabel]="'Create AR '"
+      (action)="openAddArModal()"
+    ></app-empty-state>
+  </div>
+
+  <app-table
+    *ngIf="hasData"
+    [columns]="columns"
+    [records]="arRecords"
+    [totalRecords]="arRecords.length"
+    [selectable]="true"
+    [initialRows]="5"
+    [actions]="getRowActions"
+    (action)="onAction($event)"
+  ></app-table>
+
+  <app-modal-wrapper [isOpen]="isAddArModalOpen" (close)="closeAddArModal()">
+    <app-create-edit-ar (save)="onCreateArSave($event)" (cancel)="closeAddArModal()"></app-create-edit-ar>
+  </app-modal-wrapper>
 </section>

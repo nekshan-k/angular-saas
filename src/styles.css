@@ -7,6 +7,19 @@
   box-sizing: border-box;
 }
 
+html,
+body,
+app-root {
+  height: 100%;
+}
+
+app-ar-management-page,
+app-user-management-page,
+app-dashboard-page {
+  display: block;
+  height: 100%;
+}
+
 @layer base {
   body {
     font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
